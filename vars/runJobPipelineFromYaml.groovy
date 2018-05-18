@@ -6,13 +6,13 @@ def call(String yamlPath) {
   Map pipeline = yaml.load((yamlPath as File).text)
   
   pipeline.stages.each{ s ->
-    println s.name
     try {
       stage("$s.name") {
-	s.jobs.each{ j ->
-	  print "\t$j\n"
-	  build(job: "$j")
-	}
+	parallel(
+	  s.jobs.each{ j ->
+	    build(job: "$j")
+	  }
+	)
       }
     } catch(e) {
       currentBuild.result = 'FAILURE'
