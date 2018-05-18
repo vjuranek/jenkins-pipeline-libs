@@ -15,6 +15,7 @@ def call(String yamlPath) {
 	}
       }
     } catch(e) {
+      e.printStackTrace()
       currentBuild.result = 'FAILURE'
     }
   }
