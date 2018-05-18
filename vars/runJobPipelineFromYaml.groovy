@@ -9,13 +9,12 @@ def call(String yamlPath) {
     println s.name
     try {
       stage("$s.name") {
-	stage.jobs.each{ j ->
+	s.jobs.each{ j ->
 	  print "\t$j\n"
 	  build(job: "$j")
 	}
       }
     } catch(e) {
-      e.printStackTrace()
       currentBuild.result = 'FAILURE'
     }
   }
