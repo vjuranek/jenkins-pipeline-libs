@@ -5,13 +5,13 @@ def call(String yamlPath) {
   Yaml yaml = new Yaml()
   Map pipeline = yaml.load((yamlPath as File).text)
   
-  pipeline.stages.each{ stage ->
-    println stage.name
+  pipeline.stages.each{ s ->
+    println s.name
     try {
-      stage("$stage.name") {
-	stage.jobs.each{ job ->
-	  print "\t$job\n"
-	  build(job: "$job")
+      stage("$s.name") {
+	stage.jobs.each{ j ->
+	  print "\t$j\n"
+	  build(job: "$j")
 	}
       }
     } catch(e) {
