@@ -5,12 +5,12 @@ def call(String yamlPath) {
   Yaml yaml = new Yaml()
   Map pipeline = yaml.load((yamlPath as File).text)
   
-  pipeline.stages.each{ s ->
+  pipeline.stages.each { s ->
     try {
       stage("$s.name") {
 	parallel(
-	  s.jobs.each{ j ->
-	    build(job: "$j")
+	  s.jobs.each { j ->
+	    "$j": build(job: "$j")
 	  }
 	)
       }
