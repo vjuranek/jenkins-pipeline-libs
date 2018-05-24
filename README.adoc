@@ -1,0 +1,40 @@
+= Shared library for Jenkins pipelines
+
+== Steps
+
+=== Pipeline defined in YAML file
+
+Creates and execute a pipeline defined in YAML file.
+Currently only creates stages wrappen in `try/catch` blocks and run existing jobs in parallel in each stage.
+
+
+==== Usage
+
+```groovy
+@Library('ispn-common') _
+
+yamlToPipeline("${WORKSPACE}/my-pipeline.yaml")
+```
+
+==== YAML format
+
+Expected YAML file format is as follows:
+
+```yaml
+---
+# list of stages
+stages:
+    - name: stage1
+      jobs:
+        - job1
+        - job2
+    - name: stage2
+      jobs:
+        - job3
+    - name: stage3
+      jobs:
+        - job4
+	- job5
+...
+
+```
