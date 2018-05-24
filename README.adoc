@@ -34,7 +34,7 @@ stages:
     - name: stage3
       jobs:
         - job4
-	- job5
+        - job5
 ...
 
 ```
