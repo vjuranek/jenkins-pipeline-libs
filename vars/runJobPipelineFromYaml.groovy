@@ -1,21 +1,31 @@
 @Grab('org.yaml:snakeyaml:1.21')
 import org.yaml.snakeyaml.Yaml
 
-def call(String yamlPath) {
+def loadStages(String yamlPath) {
   Yaml yaml = new Yaml()
-  Map pipeline = yaml.load((yamlPath as File).text)
-  
-  pipeline.stages.each { s ->
+  yaml.load((yamlPath as File).text)
+}
+
+def jobClosures(List jobs) {
+  def clos = [:]
+  jobs.each {
+    def j = it
+    clos["$j"] = { -> build(job: "$j")}
+  }
+  clos
+}
+
+def call(String yamlPath) {
+
+  p = loadStages(yamlPath)
+  p.stages.each { s ->
     try {
       stage("$s.name") {
-	parallel(
-	  s.jobs.each { j ->
-	    "$j": build(job: "$j")
-	  }
-	)
+	parallel(jobClosures(s.jobs))
       }
     } catch(e) {
       currentBuild.result = 'FAILURE'
     }
   }
+
 }
