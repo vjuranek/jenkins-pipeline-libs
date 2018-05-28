@@ -26,15 +26,18 @@ Expected YAML file format is as follows:
 stages:
     - name: stage1
       jobs:
-        - job1
-        - job2
-    - name: stage2
+        - name: job1
+        - name: job2
+    - name: stage2-params
       jobs:
-        - job3
+        - name: job3
+          parameters:
+            param1: value1
+	    param2: value2
     - name: stage3
       jobs:
-        - job4
-        - job5
+        - name: job4
+        - name: job5
 ...
 
 ```
