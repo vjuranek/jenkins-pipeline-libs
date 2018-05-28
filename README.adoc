@@ -33,7 +33,7 @@ stages:
         - name: job3
           parameters:
             param1: value1
-	    param2: value2
+            param2: value2
     - name: stage3
       jobs:
         - name: job4
