@@ -6,17 +6,29 @@ def loadStages(String yamlPath) {
   yaml.load((yamlPath as File).text)
 }
 
+def jobParams(Map params) {
+  parArr = []
+  for (e in params.entrySet()) { //for some reason params.each { ... } doesn't work
+    parArr.add([$class: 'StringParameterValue', name: "${e.key}", value: "${e.value}"])
+  }
+  parArr
+}
+
 def jobClosures(List jobs) {
   def clos = [:]
   jobs.each {
     def j = it
-    clos["$j"] = { -> build(job: "$j")}
+    if (j.parameters) {
+      jobParams(j.parameters)
+      clos["$j.name"] = { -> build(job: "$j.name", parameters: jobParams(j.parameters))}
+    } else {
+      clos["$j.name"] = { -> build(job: "$j.name")}
+    }
   }
   clos
 }
 
 def call(String yamlPath) {
-
   p = loadStages(yamlPath)
   p.stages.each { s ->
     try {
@@ -27,5 +39,4 @@ def call(String yamlPath) {
       currentBuild.result = 'FAILURE'
     }
   }
-
 }
