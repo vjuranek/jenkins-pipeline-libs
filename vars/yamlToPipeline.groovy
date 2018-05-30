@@ -35,7 +35,15 @@ def call(String yamlPath) {
       stage("$s.name") {
 	parallel(jobClosures(s.jobs))
       }
-    } catch(e) {
+    } catch (hudson.AbortException e) {
+      if (e.message.contains("UNSTABLE")) {
+	currentBuild.result = 'UNSTABLE'
+      } else if (e.message.contains("ABORTED")) {
+	currentBuild.result = 'ABORTED'
+      } else {
+	currentBuild.result = 'FAILURE'
+      }
+    } catch (Exception e) {
       currentBuild.result = 'FAILURE'
     }
   }
