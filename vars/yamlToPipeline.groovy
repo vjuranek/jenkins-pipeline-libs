@@ -12,8 +12,8 @@ def loadStages(String yamlPath) {
     stage('Load-pipeline') {
       //Yaml yaml = new Yaml()
       //pipe = yaml.load((yamlPath as File).text)
-      bash "pwd"
-      bash "ls -la"
+      sh "pwd"
+      sh "ls -la"
     }
   }
 
