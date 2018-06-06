@@ -10,11 +10,8 @@ def loadStages(String yamlPath) {
     }
     
     stage('Load-pipeline') {
-      //Yaml yaml = new Yaml()
-      //pipe = yaml.load((yamlPath as File).text)
-      sh "pwd > /tmp/pwd"
-      sh "ls -la > /tmp/ls"
-      sh "ls -la /home/jenkins/workspace/jdg-pipeline-full/jdg-qe/jdg-full.yaml > /tmp/pipe"
+      Yaml yaml = new Yaml()
+      pipe = yaml.load((yamlPath as File).text)
     }
   }
 
