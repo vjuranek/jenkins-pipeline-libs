@@ -14,6 +14,7 @@ def loadStages(String yamlPath) {
       //pipe = yaml.load((yamlPath as File).text)
       sh "pwd > /tmp/pwd"
       sh "ls -la > /tmp/ls"
+      sh "ls -la /home/jenkins/workspace/jdg-pipeline-full/jdg-qe/jdg-full.yaml > /tmp/pipe"
     }
   }
 
