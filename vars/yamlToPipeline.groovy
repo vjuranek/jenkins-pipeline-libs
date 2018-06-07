@@ -4,7 +4,7 @@ import org.yaml.snakeyaml.Yaml
 def loadStages(String yamlPath) {
   def pipe
   
-  //  node {
+  node('master') {
     stage('Checkout') {
       checkout([$class: 'GitSCM', branches: [[name: '*/pipelines']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'jdg-qe']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '20d2c03a-3a3a-4dcf-be31-956071aac2c3', url: 'git@github.com:infinispan/jdg-qe.git']]])
     }
@@ -13,7 +13,7 @@ def loadStages(String yamlPath) {
       Yaml yaml = new Yaml()
       pipe = yaml.load(("/home/jenkins/workspace/jdg-pipeline-full/" + yamlPath as File).text)
     }
-    //  }
+  }
 
   pipe
 }
