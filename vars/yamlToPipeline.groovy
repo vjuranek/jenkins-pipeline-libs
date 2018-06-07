@@ -11,7 +11,7 @@ def loadStages(String yamlPath) {
     
     stage('Load-pipeline') {
       Yaml yaml = new Yaml()
-      pipe = yaml.load(($WORKSPACE + yamlPath as File).text)
+      pipe = yaml.load((yamlPath as File).text)
     }
   }
 
