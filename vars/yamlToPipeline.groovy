@@ -45,7 +45,8 @@ def call(String yamlPath) {
   p.stages.each { s ->
     try {
       stage("$s.name") {
-	parallel(jobClosures(s.jobs))
+	//parallel(jobClosures(s.jobs))
+	println "$s.name"
       }
     } catch (hudson.AbortException e) {
       if (e.message.contains("UNSTABLE")) {
