@@ -10,7 +10,7 @@ def loadStages(String yamlPath) {
     // }
     
     stage('Load-pipeline') {
-      withCredentials([usernamePassword(credentialsId: '20d2c03a-3a3a-4dcf-be31-956071aac2c3')]) {
+      withCredentials([sshUserPrivateKey(credentialsId: '20d2c03a-3a3a-4dcf-be31-956071aac2c3')]) {
 	sh "git clone git@github.com:infinispan/jdg-qe.git"
 	sh "ls -la > /tmp/ls"
       }
